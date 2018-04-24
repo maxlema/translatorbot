@@ -6,7 +6,6 @@ user='testbot'
 passw='dhbot2017'
 baseurl='http://wikipast.epfl.ch/wikipast/'
 summary='Wikipastbot update'
-#names=['Madame X','Monsieur Y']
 names=['Henri Dunant']
 translator = Translator()
 
@@ -34,15 +33,20 @@ for name in names:
     code=''
     for primitive in soup.findAll("text"):
         code += primitive.string
-    print(code)
+        
+    #Create names with english prefix
+    en_name = 'en/' + translator.translate(name, src='fr', dest='en').text
+    print(en_name)
+    #payload={'action':'edit','assert':'user','format':'json','utf8':'','appendtext':code,'summary':summary,'title':en_name,'token':edit_token}
     
 #cette methode sert à traduire le texte qu'on veut traduire, 5000 chars d'un coup au max
-print(translator.translate('cette phrase par exemple', src='fr', dest='en').text)
+#print(translator.translate('cette phrase par exemple', src='fr', dest='en').text)
+print(translator.translate(code[:5000], src='fr', dest='en').text)
 
 # pour rajouter le contenu après, attention de pas poster n'importe quoi sur le site
 
 #si on veut overwrite ce qu'y a sur la page
-#payload={'action':'edit','assert':'user','format':'json','utf8':'','text':content,'summary':summary,'title':name,'token':edit_token}
+#payload={'action':'edit','assert':'user','format':'json','utf8':'','text':content,'summary':summary,'title':en_name,'token':edit_token}
 
 #OU
 
